@@ -5,6 +5,10 @@ const bodyParser= require('body-parser');
 
 const app = express();
 
+app.set('view engine', 'pug');
+
+app.set('views', 'views');
+
 const admintRoute= require('./routes/admin');
 const shopRoutes= require('./routes/shop');
 
@@ -13,7 +17,7 @@ const shopRoutes= require('./routes/shop');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname,'public')));
 
-app.use('/admin',admintRoute);
+app.use('/admin',admintRoute.routes);
 
 app.use(shopRoutes);
 
