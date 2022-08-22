@@ -9,7 +9,7 @@ shopRouter.get ('/',(req,res, next)=>{
 //     res.sendFile(path.join(rootDir,'views','shop.html'));
 
 const produts= admintRoute.products;
-res.render('shop',{prods:produts, docTitle:'My Shop'});
+res.render('shop',{prods:produts, pageTitle:'My Shop' ,path:'/'});
 });
 
 module.exports= shopRouter;
