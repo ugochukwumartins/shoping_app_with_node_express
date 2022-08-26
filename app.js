@@ -18,7 +18,7 @@ const demo= require('./routes/use_product');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname,'public')));
 
-app.use('/admin',admintRoute.routes);
+app.use('/admin',admintRoute);
 
 app.use(shopRoutes);
 
