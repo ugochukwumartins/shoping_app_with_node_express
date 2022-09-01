@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/add_product.css">
 </head>
 <body>
-    <%- include('layout/nav.ejs') %>
+    <%- include('../layout/nav.ejs') %>
     <main>
         <form class="product-form" action="/admin/product" method="POST">
             <div class="form-control" >
@@ -17,6 +17,9 @@
 
                 <label for="title">Price</label>
                 <input type="text" name="price" id="title"> 
+
+                <label for="title">Image</label>
+                <input type="text" name="image" id="title"> 
 
                 <label for="title">Description</label>
                 <input type="text" name="description" id="title"> 

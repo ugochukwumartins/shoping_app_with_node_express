@@ -11,8 +11,8 @@ app.set('views', 'views');
 
 const admintRoute= require('./routes/admin');
 const shopRoutes= require('./routes/shop');
-const demo= require('./routes/use_product');
-
+const demo= require('./routes/product');
+const error = require('./controllers/error');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -25,9 +25,7 @@ app.use(shopRoutes);
 app.use(demo);
 
 
-app.use((req,res, next) =>{
-    res.status(404).render('error_page', { pageTitle: 'Page Not Found', path:'/error'});
-});
+app.use(error.erroPage);
 //const server= http.createServer(app);
 
 //server.listen(3000);
