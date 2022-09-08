@@ -27,10 +27,11 @@ module.exports = class Product {
         this.productPrice = price;
         this.productDiscription = discription;
         this.imageUrl=imgUrl;
+    
     }
 
     save() {
-
+        this.id=Math.floor( Math.random() *2000).toString();
         getProductsFromFile(products=>{
             products.push(this);
             fs.writeFile(p,JSON.stringify(products), (err)=>{
@@ -45,4 +46,11 @@ module.exports = class Product {
         getProductsFromFile(cab);
        
     }
+  static  findById(id, cb){
+    getProductsFromFile(products =>{
+    const product=    products.find(p=> p.id==id);
+    cb(product);
+    });
+       
+  }
 }

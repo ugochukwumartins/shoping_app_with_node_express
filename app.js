@@ -12,6 +12,7 @@ app.set('views', 'views');
 const admintRoute= require('./routes/admin');
 const shopRoutes= require('./routes/shop');
 const demo= require('./routes/product');
+const carts= require('./routes/carts');
 const error = require('./controllers/error');
 
 
@@ -23,7 +24,7 @@ app.use('/admin',admintRoute);
 app.use(shopRoutes);
 
 app.use(demo);
-
+app.use(carts);
 
 app.use(error.erroPage);
 //const server= http.createServer(app);

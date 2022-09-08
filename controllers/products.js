@@ -42,9 +42,24 @@ exports.editProdut = (req,res, next)=>{
             prods: products, 
             pageTitle:'Edit-Products',
             path:'/edit-products',
-            formsCSS: true,
-            productCSS: true, 
-            activeADDProducts: true 
+          
+        });
+    });
+
+};
+
+exports.produtDetails = (req,res, next)=>{
+    //   console.log(admintRoute.products);
+    //     res.sendFile(path.join(rootDir,'views','shop.html'));
+    const productId= req.params.id;
+    console.log(productId);
+    const product = Product.findById(productId,product =>{
+     
+        res.render('shop/product-details',{
+            prods:product,
+            pageTitle:'Product Details',
+            path:'/products-details',
+          
         });
     });
 
