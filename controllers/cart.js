@@ -5,13 +5,25 @@ const Cart= require('../models/carts');
 exports.getCartList = (req,res, next)=>{
     //   console.log(admintRoute.products);
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
-    const products = Product.fetchAll(products =>{
+    Cart.getCart(cart=>{
+
+  
+     Product.fetchAll(products =>{
+      const  cartProducts=[];
+        for (product of products){
+            const cartProduct=cart.products.find(prod=> prod.id === product.id);
+            if(cartProduct){
+cartProducts.push({productData: product, qty: cartProduct.qty});
+            }
+        }
         res.render('shop/cart',{
-           // prods: products, 
+            prods:cartProducts, 
             pageTitle:'Carts',
             path:'/carts',
         });
     });
+    
+});
    
 
 
@@ -29,3 +41,13 @@ Cart.addProducts(productId, product.productPrice )
 })
 res.redirect('/carts');
 };
+
+exports.deleteCart = (req,res, next)=>{
+    const productId= req.body.id;
+    Product.findById(productId,(product)=>{
+        console.log(product);
+    Cart.deleProducts(productId, product.productPrice);
+    res.redirect('/');
+
+});
+}

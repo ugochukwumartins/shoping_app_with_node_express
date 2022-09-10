@@ -16,4 +16,5 @@ produt.get('/home',(req,res, next)=>{
   activeADDProducts:true});
 }); 
 produt.get ('/product-details/:id',productsController.produtDetails);
+
 module.exports = produt;

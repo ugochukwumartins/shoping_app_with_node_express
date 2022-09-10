@@ -8,11 +8,11 @@ exports.getAddProduts= (req, res, next) => {
         formsCSS: true,
         productCSS: true, 
         activeADDProducts: true });
-};
+};    
 
 exports.postAddProducts=(req,res, next)=>{
     // console.log(req.body);
-   const product= new Product(req.body.title, req.body.price, req.body.description, req.body.image);
+   const product= new Product(null,req.body.title, req.body.price, req.body.description, req.body.image);
    product.save();
   //  console.log(products);
     res.redirect('/');
@@ -37,14 +37,47 @@ exports.getProduts = (req,res, next)=>{
 exports.editProdut = (req,res, next)=>{
     //   console.log(admintRoute.products);
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
-    const product = Product.fetchAll(products =>{
+    const productId= req.params.id;
+    const editMode= req.query.edit;
+   
+    const product = Product.findById(productId,products =>{
         res.render('admin/edit-products',{
             prods: products, 
             pageTitle:'Edit-Products',
             path:'/edit-products',
-          
+       //   editing: editMode
         });
     });
+
+};
+exports.postEditProdut = (req,res, next)=>{
+    //   console.log(admintRoute.products);
+    //     res.sendFile(path.join(rootDir,'views','shop.html'));
+
+
+
+  const product= new  Product(req.body.id, req.body.title, req.body.price, req.body.description, req.body.image);
+   product.save()
+   res.redirect('/');
+    // const product = Product.findById(productId,products =>{
+    //     res.render('admin/edit-products',{
+    //         prods: products, 
+    //         pageTitle:'Edit-Products',
+    //         path:'/edit-products',
+    //    //   editing: editMode
+    //     });
+    // });
+
+};
+
+exports.deleteProduct = (req,res, next)=>{
+  
+    const productId= req.params.id;
+
+  
+   Product.delete(productId);
+  res.redirect('/');
+  
 
 };
 
@@ -52,13 +85,14 @@ exports.produtDetails = (req,res, next)=>{
     //   console.log(admintRoute.products);
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
     const productId= req.params.id;
-    console.log(productId);
+
     const product = Product.findById(productId,product =>{
      
         res.render('shop/product-details',{
             prods:product,
             pageTitle:'Product Details',
             path:'/products-details',
+            
           
         });
     });

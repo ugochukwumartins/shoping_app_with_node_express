@@ -9,6 +9,22 @@
 </head>
 <body>
     <%- include('../layout/nav.ejs') %>
-    <h1>cart</h1>
+ 
+    <% if(   prods.length > 0) { %>
+<ul>
+    <% prods.forEach(product=>{ %>
+<li>
+    <p><%= product.productData.productTitle %> (<%= product.qty %>)</p>
+<form action="/cart-delete-item" method="post">
+    <input type="hidden" name="id" value="<%= product.productData.id %>">
+    <button class="btn" type="submit"> Delete</button>
+</form>
+</li>
+        <% }) %>
+</ul>
+        <% } else { %>
+            <h1>Empty cart</h1>
+            <% } %>
+
 </body>
 </html>

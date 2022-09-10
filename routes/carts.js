@@ -5,5 +5,7 @@ const carts= express.Router();
 
 carts.get('/carts',cartsController.getCartList);
 carts.post('/carts',cartsController.postCartList);
+carts.post('/cart-delete-item',cartsController.deleteCart);
+
 
 module.exports = carts;
