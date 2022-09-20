@@ -21,30 +21,30 @@
                     <article class="card.product-item">
                         <header class="card_header">
                             <h1 class="product__title">
-                                <%= product.productTitle %>
+                                <%= product.Title %>
                             </h1>
                         </header>
                         <div class="card_image">
-                            <img src="<%= product.imageUrl %>"
+                            <img src="<%= product.ImageUrl%>"
                                 , alt="A Book" />
                         </div>
                       
                         <div class="card_content">
-                            <h2 class="product__price"><%= `$ ${product.productPrice}` %></h2>
+                            <h2 class="product__price"><%= `$ ${product.Price}` %></h2>
                             <p class="product__description">
-                                <%= product.productDiscription %>
+                                <%= product.Descriptions %>
                             </p>
                         </div>
                         <div class="card_actions">
-                            <a href="/product-details/<%=product.id %>" class="btn" >Details</a>
+                            <a href="/product-details/<%=product.ProductID %>" class="btn" >Details</a>
                           
-                            <a href="/admin/edit-products/<%=product.id %>" class="btn" >Edit</a>
-                            <a href="/admin/deleteProducts/<%=product.id %>" class="btn" >Delete</a>
+                            <a href="/admin/edit-products/<%=product.ProductID %>" class="btn" >Edit</a>
+                            <a href="/admin/deleteProducts/<%=product.ProductID %>" class="btn" >Delete</a>
                             
                          
                             <form action="/carts" method="post">
                                 <button class="btn">Add to Cart</button>
-                                <input type="hidden" name="prodsId" value="<%=product.id%>">
+                                <input type="hidden" name="prodsId" value="<%=product.ProductID%>">
                                </form>
                         </div>
                     </article>
@@ -59,3 +59,7 @@
 </body>
 
 </html>
+
+
+
+

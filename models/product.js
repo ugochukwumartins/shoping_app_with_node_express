@@ -1,25 +1,16 @@
-const fs = require('fs');
+const db = require('../utils/database');
 
 const Cart= require('../models/carts');
-const path = require('path');
-const p = path.join(path.dirname(require.main.filename), 'data', 'products.json');
-// const dr= require('../utils/path'); 
-const getProductsFromFile = cab => {
 
-    fs.readFile(p, (error, data) => {
-        if (error) {
+db.execute('SELECT * FROM ojadb.products')
+.then(data => { 
+    console.log(data);
 
+})
+.catch(erro => { 
+    console.log(erro);
+});
 
-            return cab([]);
-
-        } else {
-            cab(JSON.parse(data));
-        }
-
-    });
-}
-
-//const products = [];
 
 
 module.exports = class Product {
@@ -33,57 +24,22 @@ module.exports = class Product {
     }
 
     save() {
+     return   db.execute('INSERT INTO ojadb.products (Title,Price,Descriptions,ImageUrl) VALUES (?,?,?,?)',
+        [this.productTitle, this.productPrice, this.productDiscription, this.imageUrl]);
 
-
-        getProductsFromFile(products => {
-            if (this.id) {
-                const existingProductIndex = products.findIndex(product => product.id === this.id);
-                const updatedProduct = [...products];
-                updatedProduct[existingProductIndex] = this;
-                fs.writeFile(p, JSON.stringify(updatedProduct), (err) => {
-                    console.log(err);
-                });
-            } else {
-                this.id = Math.floor(Math.random() * 2000).toString();
-                products.push(this);
-                fs.writeFile(p, JSON.stringify(products), (err) => {
-                    console.log(err);
-                });
-            }
-        });
-
-        //products.push(this);
+     
     };
 
    static delete(id) {
-        getProductsFromFile(products => {
-            const product = products.find(product => product.id === id)
-            
-                const existingProductIndex = products.findIndex(product => product.id === id);
-                const updatedProduct = [...products];
-                updatedProduct.splice(existingProductIndex, 1) ;
-                Cart.deleProducts(id,  product.productPrice);
-                fs.writeFile(p, JSON.stringify(updatedProduct), (err) => {
-                    if(!err){
-                        
-                    }
-                    
-                });
-             
-            
-        });
+ 
     };
 
 
-    static fetchAll(cab) {
-        getProductsFromFile(cab);
+    static fetchAll() {
+     return   db.execute('SELECT * FROM ojadb.products');
 
     }
-    static findById(id, cb) {
-        getProductsFromFile(products => {
-            const product = products.find(p => p.id == id);
-            cb(product);
-        });
-
+    static findById(id) {
+        return   db.execute('SELECT * FROM ojadb.products WHERE products.ProductID = ?',[id]);
     }
 }

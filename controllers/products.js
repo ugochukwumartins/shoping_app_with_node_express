@@ -13,21 +13,25 @@ exports.getAddProduts= (req, res, next) => {
 exports.postAddProducts=(req,res, next)=>{
     // console.log(req.body);
    const product= new Product(null,req.body.title, req.body.price, req.body.description, req.body.image);
-   product.save();
-  //  console.log(products);
+   product.save().then(()=>{
     res.redirect('/');
+   }).catch(erro=>console.log(erro));
+  //  console.log(products);
+  
 };
 
 exports.getProduts = (req,res, next)=>{
     //   console.log(admintRoute.products);
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
-    const products = Product.fetchAll(products =>{
+     Product.fetchAll().then(([rows, columdefinintion])=>{
         res.render('shop/product-list',{
-            prods: products, 
+            prods: rows, 
             pageTitle:'My Shop',
             path:'/',
-        });
-    });
+        })
+     }).catch(erro=>{console.log(erro)});
+       
+  
    
 
 
@@ -86,15 +90,17 @@ exports.produtDetails = (req,res, next)=>{
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
     const productId= req.params.id;
 
-    const product = Product.findById(productId,product =>{
-     
+  Product.findById(productId).then(([rows,col])=>{
         res.render('shop/product-details',{
-            prods:product,
+            prods:rows,
             pageTitle:'Product Details',
             path:'/products-details',
             
           
         });
-    });
+    })
+     
+    
+    
 
 };

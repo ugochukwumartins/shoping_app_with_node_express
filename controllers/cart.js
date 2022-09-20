@@ -8,9 +8,9 @@ exports.getCartList = (req,res, next)=>{
     Cart.getCart(cart=>{
 
   
-     Product.fetchAll(products =>{
-      const  cartProducts=[];
-        for (product of products){
+     Product.fetchAll().then(([rows, columDefinition])=>{
+        const  cartProducts=[];
+        for (product of rows){
             const cartProduct=cart.products.find(prod=> prod.id === product.id);
             if(cartProduct){
 cartProducts.push({productData: product, qty: cartProduct.qty});
@@ -21,7 +21,11 @@ cartProducts.push({productData: product, qty: cartProduct.qty});
             pageTitle:'Carts',
             path:'/carts',
         });
-    });
+     }).catch(erro=>{
+        console.log(erro);
+     })
+
+   
     
 });
    
