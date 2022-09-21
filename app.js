@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const db = require('./utils/database');
+const sequelize= require('./utils/database');
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -32,4 +32,17 @@ app.use(error.erroPage);
 //const server= http.createServer(app);
 
 //server.listen(3000);
+sequelize.authenticate().then(result =>{
+    console.log(result);
+    console.log("connection started");
+    }).catch(error =>{
+        console.log(error);   
+    });
+
+sequelize.sync().then(result =>{
+
 app.listen(3000);
+
+}).catch(error =>{
+    console.log(error);   
+});
