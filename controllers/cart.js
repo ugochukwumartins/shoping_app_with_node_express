@@ -47,6 +47,7 @@ res.redirect('/carts');
 };
 
 exports.deleteCart = (req,res, next)=>{
+    
     const productId= req.body.id;
     Product.findById(productId,(product)=>{
         console.log(product);
