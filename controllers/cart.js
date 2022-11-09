@@ -7,8 +7,8 @@ exports.getCartList = (req,res, next)=>{
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
     Cart.getCart(cart=>{
 
-  
-     Product.fetchAll().then(([rows, columDefinition])=>{
+       
+     Product. findAll().then(rows =>{
         const  cartProducts=[];
         for (product of rows){
             const cartProduct=cart.products.find(prod=> prod.id === product.id);
@@ -36,12 +36,12 @@ cartProducts.push({productData: product, qty: cartProduct.qty});
 exports.postCartList = (req,res, next)=>{
     //   console.log(admintRoute.products);
     //     res.sendFile(path.join(rootDir,'views','shop.html'));
-  
+    
    
 const productId= req.body.prodsId;
 console.log(productId);
-Product.findById(productId,(product)=>{
-Cart.addProducts(productId, product.productPrice )
+Product.findByPk(productId,(product)=>{
+Cart.addProducts(productId, product.price )
 })
 res.redirect('/carts');
 };
@@ -49,7 +49,7 @@ res.redirect('/carts');
 exports.deleteCart = (req,res, next)=>{
     
     const productId= req.body.id;
-    Product.findById(productId,(product)=>{
+    Product.findByPk(productId,(product)=>{
         console.log(product);
     Cart.deleProducts(productId, product.productPrice);
     res.redirect('/');

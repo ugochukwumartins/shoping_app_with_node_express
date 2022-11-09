@@ -42,9 +42,9 @@
                             <a href="/admin/deleteProducts/<%=product.id %>" class="btn" >Delete</a>
                             
                          
-                            <form action="/carts" method="post">
+                            <form action="/cart" method="post">
                                 <button class="btn">Add to Cart</button>
-                                <input type="hidden" name="prodsId" value="<%=product.ProductID%>">
+                                <input type="hidden" name="prodsId" value="<%=product.id%>">
                                </form>
                         </div>
                     </article>
