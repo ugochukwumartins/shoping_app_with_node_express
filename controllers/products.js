@@ -24,6 +24,7 @@ exports.postAddProducts = (req, res, next) => {
     price: price,
     imageUrl: image,
     description: description,
+    userId: req.user.id
   }).then(results =>  res.redirect('/')).catch(erro =>{console.log(erro)});
 };
 

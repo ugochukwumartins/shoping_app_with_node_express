@@ -13,13 +13,21 @@ const admintRoute = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const demo = require('./routes/product');
 const carts = require('./routes/carts');
-
+const product = require('./models/product')
+const user = require('./models/user')
 
 const error = require('./controllers/error');
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((req, res, next)=>{
+    user.findByPk(1).then(users=>{
+        req.user= users;
+        next();
+    }).catch(err=> console.log(err));
+});
 
 app.use('/admin', admintRoute);
 
@@ -31,6 +39,8 @@ app.use(carts);
 app.use(error.erroPage);
 //const server= http.createServer(app);
 
+product.belongsTo(user,{constraints: true, onDelete: 'CASCADE'});
+user.hasMany(product);
 //server.listen(3000);
 sequelize.authenticate().then(result =>{
     console.log(result);
@@ -40,9 +50,17 @@ sequelize.authenticate().then(result =>{
     });
 
 sequelize.sync().then(result =>{
+return  user.findByPk(1)
 
-app.listen(3000);
 
+}).then(userFound=>{
+   if(!userFound) {
+  return  user.create({name:'Ugo', email: 'test@gmail.com'});
+   }
+   return user;
+}).then(userf=>{
+  //  console.log(userf);
+    app.listen(3000);
 }).catch(error =>{
     console.log(error);   
 });
