@@ -15,7 +15,8 @@ const demo = require('./routes/product');
 const carts = require('./routes/carts');
 const product = require('./models/product')
 const user = require('./models/user')
-
+const Cart = require('./models/carts')
+const CartItem = require('./models/cart-item')
 const error = require('./controllers/error');
 
 
@@ -41,6 +42,10 @@ app.use(error.erroPage);
 
 product.belongsTo(user,{constraints: true, onDelete: 'CASCADE'});
 user.hasMany(product);
+user.hasOne(Cart);
+Cart.belongsTo(user,{constraints: true, onDelete: 'CASCADE'});
+Cart.belongsToMany(product,{through: CartItem});
+product.belongsToMany(Cart,{through: CartItem});
 //server.listen(3000);
 sequelize.authenticate().then(result =>{
     console.log(result);
@@ -58,8 +63,7 @@ return  user.findByPk(1)
   return  user.create({name:'Ugo', email: 'test@gmail.com'});
    }
    return user;
-}).then(userf=>{
-  //  console.log(userf);
+}).then(cart=>{
     app.listen(3000);
 }).catch(error =>{
     console.log(error);   
